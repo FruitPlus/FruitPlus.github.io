@@ -264,10 +264,221 @@ radial-gradient不允许设置重复的渐变，如果要实现重复的径向�
 
 同理，一下是两个repeating-radial-gradient的例子：
 
-<p data-height="578" data-theme-id="2146" data-slug-hash="EAFeB" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/fantaghiro/pen/EAFeB/'>EAFeB</a> by Pei (<a href='http://codepen.io/fantaghiro'>@fantaghiro</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<p data-height="578" data-theme-id="2146" data-slug-hash="EAFeB" data-default-tab="result" class='codepen'>See the Pen
+ <a href='http://codepen.io/fantaghiro/pen/EAFeB/'>EAFeB</a> by Pei (<a href='http://codepen.io/fantaghiro'>@fantaghiro</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//codepen.io/assets/embed/ei.js"></script>
 
 ##五彩斑斓的由gradient制作的图案
 
 通过各种技术组合，可以通过gradient的设置制作出各种精美的图案。在[这里](http://lea.verou.me/css3patterns/)能看到很多神奇的Pattern。
 
+
+
+<table>
+    <thead>
+        <td>Constant</td>
+        <td>Description</td>
+    </thead>
+    <tbody>
+        <tr>
+            <td>closest-side</td>
+            <td>如果是正圆，那么渐变的ending shape与box最接近center的一边相切；如果是椭圆，那么ending shape与最接近中心的水平边与垂直边相切。</td>
+        </tr>
+        <tr>
+            <td>closest-corner</td>
+            <td>渐变的ending shape与最接近中心的box的一角相遇。</td>
+        </tr>
+        <tr>
+            <td>farthest-side</td>
+            <td>与closest-side相似，只不过把“最接近”改为“最远离”。</td>
+        </tr>
+        <tr>
+            <td>farthest-corner</td>
+            <td>与closest-corner相似，只不过把“最接近”改为“最远离”。</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+{% highlight css %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>Document</title>
+  <style>
+  body{
+    margin: 0px;
+    padding: 0px;
+  }
+  .Dialog{
+    border:1px solid #333;
+    position: absolute;
+    z-index: 2;
+    background: white;
+  }
+  .title{
+    height: 30px;
+    background: #333;
+    opacity: 0.7;
+    color: #fff
+  }
+  .content{
+  }
+  .close{
+    position: absolute;
+    display: block;
+    right: 0px;
+    top: 0px;
+    display: block;
+    font-size: 30px;
+    color: #fff;
+    z-index: 2
+  }
+  .mark{
+    background:black;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    opacity: 0.5;
+    z-index: -1;
+  }
+  </style>
+</head>
+<body>
+  <input type="button" value='1'/>
+  <input type="button" value='2'/>
+  <input type="button" value='3'/>
+<!--  <div class='Dialog'>
+    <div class='title'>
+      登陆
+      <span class='close'>X</span>
+    </div>
+    <div class='content'></div>
+  </div> -->
+  <script>
+
+  function Dialog(id){
+    this.oDiv=document.getElementById(id);
+    this.id=id
+    this.options={
+      w:250,
+      h:200,
+      dir:'center',
+      title:'',
+      mark:false,
+    }
+  }
+
+  Dialog.prototype.init=function(opt){
+
+    extend(this.options,opt)
+
+    if(this.json[opt.iNow]==undefined){ //用了原型，所以iNow是全局性，
+      this.json[opt.iNow]=true    //比如，凡是传进来的(iNow=1)的，都设置为true 因为 this.json.1=true
+      
+    }
+
+    if(this.json[opt.iNow]){
+      this.creat()
+      this.fnClose()
+      if(this.options.mark==true){
+        this.createMark()
+      }
+
+      this.json[opt.iNow]=false;
+
+    }
+  }
+
+  Dialog.prototype.creat=function(){
+
+    this.oLogin=document.createElement('div');
+    this.oLogin.className='Dialog';
+    this.oLogin.id=this.id;
+    this.oLogin.innerHTML='<div class="title">'+this.options.title+'<span class="close">X</span></div><div class="content"></div>';
+    document.body.appendChild(this.oLogin)
+
+    this.setData()
+  }
+
+  Dialog.prototype.json={}
+
+  Dialog.prototype.setData=function(opt){
+
+    this.oLogin.style.width=this.options.w+'px';
+    this.oLogin.style.height=this.options.h+'px';
+
+    if(this.options.dir=='center'){
+      this.oLogin.style.left=((viewWidth()-this.oLogin.offsetWidth)/2+'px')
+      this.oLogin.style.top=((viewHeight()-this.oLogin.offsetHeight)/2+'px')
+    }
+    if(this.options.dir=='right'){
+      this.oLogin.style.left=((viewWidth()-this.oLogin.offsetWidth)+'px')
+      this.oLogin.style.top=((viewHeight()-this.oLogin.offsetHeight)+'px')
+    };
+
+  }
+
+  Dialog.prototype.createMark=function(){
+    var oMark = document.createElement('div');
+    oMark.className = 'mark';
+    
+    document.body.appendChild( oMark );
+    
+    this.oMark = oMark; 
+    
+    oMark.style.width = viewWidth() + 'px';
+    oMark.style.height = viewHeight() + 'px';
+
+  }
+
+  Dialog.prototype.fnClose=function(){
+    var oClose=this.oLogin.getElementsByTagName('span')[0]
+    var This=this;
+
+    oClose.onclick=function(){
+      document.body.removeChild(This.oLogin)
+      if(This.options.mark){
+        document.body.removeChild(This.oMark)
+      }
+      This.json[This.options.iNow] = true;
+    }
+  }
+
+  function extend(obj1,obj2){
+    for(var attr in obj2){
+      obj1[attr]=obj2[attr]
+    }
+  }
+
+  function viewWidth(){
+    return document.documentElement.clientWidth;
+  }
+  function viewHeight(){
+    return document.documentElement.clientHeight;
+  }
+
+  var aIpt=document.getElementsByTagName('input');
+
+  aIpt[0].onclick=function(){
+    var oDiv=new Dialog('div1') 
+    oDiv.init({iNow:0})
+  }
+  aIpt[1].onclick=function(){
+    var oDiv=new Dialog('div2') 
+    oDiv.init({mark:true,iNow:1})
+  }
+  aIpt[2].onclick=function(){
+    var oDiv=new Dialog('div3')
+    oDiv.init({w:100,h:200,dir:'right',iNow:2})
+  }
+
+  </script>
+</body>
+</html>
+{% endhighlight %}
+
+[bos-shadow]({% post_url 2014-06-20-box-shadow-study-notes %})
