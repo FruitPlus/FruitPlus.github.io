@@ -8,9 +8,8 @@ tags:
 ---
 
 <style>
-img{
-  max-widht:600px;
-  max-height:600px;
+h1{
+  font-size:40px
 }
 </style>
   
