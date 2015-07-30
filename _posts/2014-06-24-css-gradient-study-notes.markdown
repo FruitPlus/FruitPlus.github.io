@@ -482,3 +482,9 @@ radial-gradient不允许设置重复的渐变，如果要实现重复的径向�
 {% endhighlight %}
 
 [bos-shadow]({% post_url 2014-06-20-box-shadow-study-notes %})
+
+
+
+<a class="jsbin-embed" href="http://jsbin.com/salozo/1/embed?live">JS Bin demo</a><script src="http://static.jsbin.com/js/embed.js"></script>
+
+<a class="jsbin-embed" href="http://jsbin.com/xehofi/embed?html,css,js,output">Document on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.34.1"></script>
