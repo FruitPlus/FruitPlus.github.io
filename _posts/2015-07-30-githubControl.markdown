@@ -9,7 +9,8 @@ tags:
 
 <style>
 img{
-  max-widht:90%
+  max-widht:600px;
+  max-height:600px;
 }
 </style>
   
