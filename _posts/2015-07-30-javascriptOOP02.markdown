@@ -132,3 +132,77 @@ var arr = [];
 alert( arr instanceof Array ) //true
 
 {% endhighlight %}
+
+
+####toString() :  object上的方法
+{% highlight css %}
+var arr=[1,2,3]		//系统对象
+	// alert(arr.toString()) //string
+	// alert(arr.toString==Array.prototype.toString) //true //方法是相同的
+
+	function Aaa(){
+
+	}
+	var aaa=new Aaa()	//自己写的对象 
+
+	// alert(aaa.toString==Array.prototype.toString) //false 证明了系统对象的toStirng不同于自己写的对象的toStirng
+	// alert(aaa.toString==Object.prototype.toString)//true	自己写的对象的toStirng属于最外层的Object
+
+	// alert(aaa.toString())//[object object]
+	// alert(arr.toString())// 1,2,3
+	// alert(Array.prototype.toString.call(arr))// 1,2,3  并不是 [object Array] ，因为这个toString是Array下的
+
+	// alert(Array.prototype.toString.call(aaa))//[object object]
+	// alert(Object.prototype.toString.call(arr))//[object Array]
+	// alert(Object.prototype.toString.call(aaa))//[object object]
+
+	// //综上所得，系统对象有个 toStirng()方法 
+	// 自己写的对象 有个 toString()方法 
+	//Object.prototype.toString.call(o)这个方法可以判别任何变量的类型 均会返回 [object 类型]
+	//Array.prototype.toString.call(o) 也可以,但如果是Array类型的，它则会直接 返回字符串
+
+	//经测试, Number.prototype.toString.call(o)
+
+	//		  Function.prototype.toString.call(o)
+	//		  Boolean.prototype.toString.call(o)
+	//           .
+	//           .
+	//           .
+	//   	  等都不可以可以判别任何变量的类型    但可以返回自己的类型的字符串//因为他们的toString都是自带的，并不是用Object的
+	// 如   alert(Number.prototype.toString.call(num)) //255
+
+
+	//		所以还是用Object.prototype.toString.call(o)	最妥当
+
+{% endhighlight %}
+
+
+
+
+
+
+
+####最好使用toString方法判别数据类型
+
+因为在一些特殊情况下，constructor和instanceof不管用
+{% highlight css %}
+
+window.onload = function(){
+	
+	var oF = document.createElement('iframe');
+	document.body.appendChild( oF );
+	
+	var ifArray = window.frames[0].Array;
+	
+	var arr = new ifArray();
+	
+	//alert( arr.constructor == Array );  //false
+	
+	//alert( arr instanceof Array );  //false
+	
+	alert( Object.prototype.toString.call(arr) == '[object Array]' );  //true
+	
+	
+};
+
+{% endhighlight %}
