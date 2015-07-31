@@ -39,26 +39,35 @@ tags:
 	<li>实例都包含一个指向原型对象的指针<span class='red'>[[prototype]]</span></li>
 </ul>
 
-####原型链的理解
+####实现原型链的基本模式
 	
 对象的原型决定了实例的类型，默认情况下，所有对象都是<strong>对象(Object)</strong>的实例
+前面例子中展示的原型链还少一环。我们知道，所有引用类型默认都继承了 Object ，而
+这个继承也是通过原型链实现的。大家要记住，所有函数的默认原型都是 Object 的实例，因此默认原
+型都会包含一个内部指针， 指向 Object.prototype 。 这也正是所有自定义类型都会继承 toString() 、
+valueOf() 等默认方法的根本原因。所以，我们说上面例子展示的原型链中还应该包括另外一个继承层
+次。下图为我们展示了该例子中完整的原型链。
 {% highlight css %}
-function Book(title, publisher){
-this.title = title;
-this.publisher = publisher;
+function SuperType(){
+this.property = true;
 }
-Book.prototype.sayTitle = function(){
-alert(this.title);
+SuperType.prototype.getSuperValue = function(){
+return this.property;
 };
-var book1 = new Book("High Performance JavaScript", "Yahoo! Press");
-var book2 = new Book("JavaScript: The Good Parts", "Yahoo! Press");
-alert(book1 instanceof Book); //true
-alert(book1 instanceof Object); //true
-book1.sayTitle(); //"High Performance JavaScript"
-alert(book1.toString()); //"[object Object]"
+function SubType(){
+this.subproperty = false;
+}
+//继承了 SuperType
+SubType.prototype = new SuperType();
+SubType.prototype.getSubValue = function (){
+return this.subproperty;
+};
+var instance = new SubType();
+alert(instance.getSuperValue()); //true
 {% endhighlight %}
-Book 构造器用于创建一个新的 Book 实例。 book1 的原形 （__proto__） 是 Book.prototype， Book.prototype
-的原形是 Object。这就创建了一个原形链，book1 和 book2 继承了它们的成员。
+
+<img src="http://FruitPlus.github.io/images/oop/oop02.jpg">
+
 
 
 
