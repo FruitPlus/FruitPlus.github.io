@@ -26,7 +26,8 @@ tags:
 都是从 Object 继承而来的。</li>
 	<li>当调用构造函数创建一个新实例后，该实例的内部将包含一个指针（内部
 属性） ，指向构造函数的原型对象<span class='red'>(看三号线)</span></li>
+	<li><img src="http://FruitPlus.github.io/images/oop/oop01.jpg"></li>
 </ul>
 
 
-	<img src="http://FruitPlus.github.io/images/oop/oop01.jpg">
+
