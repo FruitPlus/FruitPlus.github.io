@@ -6,6 +6,7 @@ description:
 tags:
 - javascript
 - 面向对象
+- 面试
 ---
 
 <style type="text/css">
@@ -85,8 +86,49 @@ alert("toString" in book); //true  因为最外层是Object
 {% endhighlight %}
 
 
+####constructor:查看对象的构造函数
+{% highlight css %}
+function Aaa(){
+}
+var a1 = new Aaa();
+
+alert( a1.constructor );  //Aaa
+
+var arr = [];
+alert( arr.constructor == Array );  //true*/
 
 
+//Aaa.prototype.constructor = Array; 可以修改的，不过没有必要
 
 
+{% endhighlight %}
 
+
+####For in 的时候有些属性是找不到的
+{% highlight css %}
+function Aaa(){
+}
+
+Aaa.prototype.name = 10;
+
+for( var attr in Aaa.prototype ){
+	alert(attr);  //只有name   constructor 是for in找不到的
+}
+{% endhighlight %}
+
+####instanceof : 对象与构造函数在原型链上是否有关系
+
+{% highlight css %}
+function Aaa(){
+}
+
+var a1 = new Aaa();
+//alert( a1 instanceof Array );  //false
+//alert( a1 instanceof Object );  //true  因为最外层是Object
+
+
+var arr = [];
+
+alert( arr instanceof Array ) //true
+
+{% endhighlight %}
