@@ -68,6 +68,22 @@ alert(instance.getSuperValue()); //true
 
 <img src="http://FruitPlus.github.io/images/oop/oop02.jpg">
 
+####hasOwnProperty()  : 看是不是对象自身下面的属性
+
+<strong>hasOwnProperty()只搜索实例，不搜索原型</strong>
+
+<strong>in操作符实例和原型都搜索</strong>
+{% highlight css %}
+var book = {
+title: "High Performance JavaScript",
+publisher: "Yahoo! Press"
+};
+alert(book.hasOwnProperty("title")); //true
+alert(book.hasOwnProperty("toString")); //false
+alert("title" in book); //true
+alert("toString" in book); //true  因为最外层是Object 
+{% endhighlight %}
+
 
 
 
