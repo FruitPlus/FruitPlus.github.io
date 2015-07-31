@@ -8,61 +8,25 @@ tags:
 - 面向对象
 ---
 
-
+<style type="text/css">
+	.red{
+		color: red
+	}
+</style>
 
 - 这里是一个目录
 {:toc}
 
-###工厂模式
-
-工厂模式 : 其实就是封装函数
-{% highlight css %}
-
-
-function createPerson(name){
-
-	//alert(this) 指向window 因为是在window下调用的
-	
-	//1.原料
-	var obj = new Object();
-	//2.加工
-	obj.name = name;
-	obj.showName = function(){
-		alert( this.name );
-	};
-	//3.出场
-	return obj;
-	
-}
-
-var p1 = createPerson('小明');
-p1.showName();
-var p2 = createPerson('小强');
-p2.showName();
-
-{% endhighlight css%}
+###原型的理解
+<ul>
+	<li>无论什么时候，只要创建了一个新函数，就会根据一组特定的规则为该函数创建一个 prototype
+属性，这个属性指向函数的原型对象。<span class='red'>(看一号线)</span></li>
+	<li>在默认情况下，所有原型对象都会自动获得一个 constructor（构造函数）属性，这个属性包含一个指向prototype 属性<strong>所在函数</strong>的指针<span class='red'>(看二号线)</span></li>
+	<li>创建了自定义的构造函数之后，其原型对象默认只会取得 constructor 属性；至于其他方法，则
+都是从 Object 继承而来的。</li>
+	<li>当调用构造函数创建一个新实例后，该实例的内部将包含一个指针（内部
+属性） ，指向构造函数的原型对象<span class='red'>(看三号线)</span></li>
+</ul>
 
 
-###构造函数
-当new去调用一个函数 : 这个时候函数中的this就是创建出来的对象,而且函数的的返回值直接就是this的
-<strong>(隐式返回)</strong>
-
-new后面调用的函数 : 叫做<strong>构造函数</strong>
-{% highlight css %}
-
-function CreatePerson(name){
-	
-	this.name = name;
-	this.showName = function(){
-		alert( this.name );
-	};
-	
-}
-
-var p1 = new CreatePerson('小明');
-//p1.showName();
-var p2 = new CreatePerson('小强');
-//p2.showName();
-
-
-{% endhighlight css%}
+	<img src="http://FruitPlus.github.io/images/oop/oop01.jpg">
