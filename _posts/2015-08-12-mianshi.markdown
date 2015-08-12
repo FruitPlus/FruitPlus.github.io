@@ -259,6 +259,15 @@ img{ vertical-align:middle;}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>无标题文档</title>
 <style>
+/*
+在IE6、7下不支持把div变成table
+所以要加
+position:relative; overflow:hidden;
+*position:absolute;left:50%;top:50%;
+*position:relative; vertical-align:top;left:-50%;top:-50%;
+*/
+
+
 .box{ width:800px;height:600px;border:2px solid #000;display:table;position:relative; overflow:hidden;}
 span{ display:table-cell; text-align:center; vertical-align:middle;*position:absolute;left:50%;top:50%;}
 img{ *position:relative; vertical-align:top;left:-50%;top:-50%;}
