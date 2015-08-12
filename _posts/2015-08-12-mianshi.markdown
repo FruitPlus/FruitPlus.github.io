@@ -163,3 +163,112 @@ div{ width:100px;height:100px;background:Red;border:5px solid #000;}
 </html>
 {% endhighlight %}
 
+
+
+####模拟相对定位
+
+第一种模拟方法(通常面试用)
+
+
+其实写法有很多问题，在正常浏览器下把position:relative;就可以滚动了，但IE6没有，因为子元素有相对定位的元素，overflow是不起作用的
+{% highlight css %}
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+html{height:100%;overflow:hidden;} // 此处让其跟文档(说的就是这个窗口)height一样
+body{margin:0; height:100%;overflow:auto;} // 此处也是让其跟html元素的height一样，相对html元素
+.box{height:2000px;}
+.div{width:100px;height:100px;background:red; position:absolute;left:100px;top:100px;}//此处用了绝对定位，而此处的定位是相对文档的，当滚动条滚动的时候自然这里，没有相对html滚动，从而达到固定定位fix遮掩的效果（兼容性很好）
+</style>
+</head>
+<body>
+<div class="box">
+    <div class="div"></div>
+</div>
+</body>
+</html>
+
+{% endhighlight %}
+
+第二种
+{% highlight css %}
+
+
+问题是性能不好，所以最好还是用js写
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+.box{height:2000px;}
+.div{width:100px;height:100px;background:red; position:fixed;left:100px;top:100px;_position:absolute;_top:expression(eval(document.documentElement.scrollTop+100));
+}
+</style>
+</head>
+<body>
+<div class="box">
+    <div class="div"></div>
+</div>
+</body>
+</html>
+
+{% endhighlight %}
+
+
+####未知宽高的img居中问题
+
+第一种方法
+
+{% highlight css %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+.box{ width:800px;height:600px;border:2px solid #000; text-align:center;}
+span{ display:inline-block; height:100%; vertical-align:middle;}
+img{ vertical-align:middle;}
+</style>
+</head>
+<body>
+<div class="box">
+    <img src="http://FruitPlus.github.io/images/css/bigptr.jpg"><span></span>
+</div>
+</body>
+</html>
+
+{% endhighlight %}
+
+
+第二种
+
+
+{% highlight css %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+.box{ width:800px;height:600px;border:2px solid #000;display:table;position:relative; overflow:hidden;}
+span{ display:table-cell; text-align:center; vertical-align:middle;*position:absolute;left:50%;top:50%;}
+img{ *position:relative; vertical-align:top;left:-50%;top:-50%;}
+</style>
+</head>
+<body>
+<div class="box">
+    <span><img src="http://FruitPlus.github.io/images/css/bigptr.jpg"></span>
+</div>
+</body>
+</html>
+
+{% endhighlight %}
