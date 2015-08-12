@@ -14,6 +14,9 @@ tags:
 
 ####热区
 
+<img src="http://FruitPlus.github.io/images/css/requ01.jpg">
+<img src="http://FruitPlus.github.io/images/css/requ02.jpg">
+
 {% highlight css %}
 <!DOCTYPE HTML>
 <html>
@@ -40,6 +43,123 @@ area 点击区域
 </html>
 {% endhighlight %}
 
+####data uri
+把图片转为数据直接使用
+优点：减少HTTP请求次数
+缺点：无法被重复利用，文件变大
+
+使用以下网址，可以把图片变为数据
+http://www.yyyweb.com/demo/inner-show/drime.html
 
 
+####iframe的样式设置问题
+
+{% highlight css %}
+<iframe src="http://www.baidu.com" width="300" height="200" frameborder="0" scrolling="no"></iframe>
+{% endhighlight %}
+<iframe src="http://www.baidu.com" width="500" height="300" frameborder="0" scrolling="no"></iframe>
+
+
+####flash引入
+
+flash透明< param name="wmode" value="transparent"> wmode="transparent"
+{% highlight css %}
+<object>
+    <param name="wmode" value="transparent"> 
+    <embed src="1.swf" width="400" height="400" wmode="transparent"></embed>
+</object>
+{% endhighlight %}
+
+
+####视频引入
+
+有两种方法引入
+<p>第一种就是直接在DW>插入 >媒体>FLV(DW只支持FLV视频)</p>
+<p>第二种就是去优酷或者其他视频网站引入播放地址</p>
+
+
+####词内断行和省略号
+
+<p>word-wrap:break-word:单行超出的，就会断行，排整齐</p>
+<p>word-break:break-all:整一个块都排整齐，不管有没有断行</p>
+<p>white-space:nowrap:强制文字不换行(超出也不换行，可以使overfollow)</p>
+<p>text-overflow （clip | ellipsis）第一个属性是不显示省略号，第二个属性是显示省略号</p>
+
+文本溢出要加省略号的时候，white-space:nowrap; overflow:hidden; text-overflow:ellipsis;这三个的属性要同时写
+
+{% highlight css %}
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+p{width:200px;border:1px solid #000; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+</style>
+</head>
+<body>
+<p>要闻
+习近平给志愿者回信:青年有担当国家就有前途 李克强会见拜登 美称对中国新领导集体充满期待 卡梅伦成都吃火锅花877元 遭遇"奇葩"提问 教育部：高考改革将减少科目 探索不分文理科</p>
+</body>
+</html>
+{% endhighlight %}
+
+
+####盒模型的怪异模式
+
+
+
+{% highlight css %}
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+.box{ width:200px;height:200px;border:10px solid #000;background:Red;padding:50px;/* box-sizing:border-box;*/}
+.div{height:50px;background:yellow;}
+/*
+    可视宽: 元素的内容宽+padding+border
+    元素的内容宽：元素里可以放内容的宽度
+    
+    怪异模式： 可视宽 = 设置宽度   内容宽=设置宽度-padding-bordersss
+    在IE6,7,8下不设置文档声明的时候 页面的盒模型解析 就会进入怪异模式
+
+    box-sizing:border-box;z在css3中新增了这条样式，可以设置怪异模式
+    border-box为怪异模式
+    content-bot为标准模式
+*/
+</style>
+</head>
+<body>
+<div class="box">
+    <div class="div"></div>
+</div>
+</body>
+</html>
+{% endhighlight %}
+
+
+#### display:none和visibility:hidden;
+
+<p>display:none是整个元素的宽高都消息</p>
+<p>visibility:hidden在文档流中依然保留元素之前的宽高</p>
+{% highlight css %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+div{ width:100px;height:100px;background:Red;border:5px solid #000;}
+.box1{ display:none;}
+.box2{ visibility:hidden;}
+</style>
+</head>
+<body>
+<div class="box1">box1</div>
+<div class="box2">box2</div>
+<div class="box3">box3</div>
+</body>
+</html>
+{% endhighlight %}
 
